@@ -4,13 +4,13 @@
 
 @section('content')
 	
-	<div class="col-md-6 offset-md-3">
+	<form class="col-md-6 offset-md-3">
 		<h1 class="h2">Register</h1>
 		<form action="{{ route('user.store') }}" method='post'>
 			@csrf
 			<div class="mb-3">
 				<label for="name" class="form-label">User Name</label>
-				<input name="name" type="name" class="form-control @error('name') is-invalid @enderror" id="name" placeholder='Name' value='{{ old('name') }}'>
+				<input name="name" type="text" class="form-control @error('name') is-invalid @enderror" id="name" placeholder='Name' value='{{ old('name') }}'>
 				@error('name')
 				<div class="invalid-feedback">
 					{{$message}}
@@ -29,13 +29,13 @@
 			</div>
 			<div class="mb-3">
 				<label for="password" class="form-label">Password</label>
-				<input name="password" type="password" class="form-control" id="password" placeholder='Password'>
+				<input name="password" type="password" class="form-control @error('password') is-invalid @enderror" id="password" placeholder='Password'>
 			</div>
 			<div class="mb-3">
 				<label for="password_confirmation" class="form-label">Confirm password</label>
 				<input name="password_confirmation" type="password" class="form-control" id="password_confirmation" placeholder='Confirm password'>
 			</div>
 			<button type="submit" class="btn btn-primary">Register</button>
-		</div>
+		</form>
 	</div>
 @endsection

@@ -15,7 +15,6 @@ class UserController extends Controller
     }
     public function store(Request $request)
     {
-        // $user = Auth::user();
         $request->validate([
             'name' => ['required', 'max:255'],
             'email' => ['required', 'email', 'max:255', 'unique:users'],
@@ -33,6 +32,21 @@ class UserController extends Controller
     public function login()
     {
         return view('user.login');
+    }
+    public function loginAuth(Request $request)
+    {
+        $credentials = $request->validate([
+            'email' => ['required', 'email', 'max:255'],
+            'password' => ['required', 'min:6', 'max:25']
+        ]);
+        if (Auth::attempt($credentials, $request->boolean('remember'))) {
+            $request->session()->regenerate();
+            $user = Auth::user()->name;
+            return redirect()->intended('dashboard')->with('success', "Welcome back {$user}");
+        }
+        return back()->withErrors([
+            'email' => 'Неправильный Email или пароль.'
+        ]);
     }
     public function dashboard()
     {
